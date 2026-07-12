@@ -77,6 +77,14 @@ body{
 	background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
 }
 
+/* auth card override for premium look */
+.panel.auth{
+	background: linear-gradient(180deg, rgba(11,99,214,0.06), rgba(255,255,255,0.02));
+	border-radius:14px;
+	padding:20px;
+	box-shadow: 0 10px 30px rgba(11,99,214,0.06);
+}
+
 h1,h2,h3,h4{margin:0}
 
 .muted{color:var(--muted)}

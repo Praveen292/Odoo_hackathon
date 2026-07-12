@@ -5,6 +5,9 @@ import {fetchKPIs, fetchRecentTrips, fetchRecentMaint} from '../services/api'
 import Table from '../components/common/Table'
 import Loader from '../components/common/Loader'
 import '../styles/global.css'
+import TripsChart from '../components/dashboard/TripsChart'
+import KPICards from '../components/dashboard/KPICards'
+import RecentTrips from '../components/dashboard/RecentTrips'
 
 function KPI({label,value}){
 	return (
@@ -48,27 +51,23 @@ export default function Dashboard(){
 				</div>
 			</div>
 
-			<div className="kpi-grid">
-				<KPI label="Active Vehicles" value={kpis.activeVehicles} />
-				<KPI label="Available Vehicles" value={kpis.availableVehicles} />
-				<KPI label="Vehicles In Maintenance" value={kpis.inMaintenance} />
-				<KPI label="Active Trips" value={kpis.activeTrips} />
-			</div>
+			<KPICards kpis={kpis} />
 
 			<div style={{height:18}} />
 
 			<div style={{display:'grid',gridTemplateColumns:'2fr 1fr',gap:16}}>
 				<div className="panel card">
 					<h3>Trips Per Month</h3>
-					<div className="chart-placeholder">Chart (Chart.js integration later)</div>
+					<div style={{height:260}}>
+						<TripsChart data={{labels:['Jan','Feb','Mar','Apr','May','Jun'],dataset:[10,14,18,16,22,20]}} />
+					</div>
 					<div style={{height:12}} />
-					<h4 className="muted">Recent Trips</h4>
-					<Table columns={[{key:'id',title:'Trip ID'},{key:'vehicle',title:'Vehicle'},{key:'driver',title:'Driver'},{key:'status',title:'Status'},{key:'revenue',title:'Revenue'}]} data={trips} />
+					<RecentTrips data={trips} />
 				</div>
 
 				<div className="panel card">
 					<h3>Maintenance</h3>
-					<div className="chart-placeholder">Maintenance Overview</div>
+					<div style={{height:120}} className="chart-placeholder">Maintenance Overview</div>
 					<div style={{height:12}} />
 					<Table columns={[{key:'id',title:'ID'},{key:'vehicle',title:'Vehicle'},{key:'desc',title:'Description'},{key:'cost',title:'Cost'},{key:'status',title:'Status'}]} data={maint} />
 				</div>
