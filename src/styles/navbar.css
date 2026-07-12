@@ -1,0 +1,14 @@
+:root{}
+
+.topbar{background:transparent}
+.topbar .left{display:flex;align-items:center;gap:12px}
+.topbar .right{display:flex;align-items:center;gap:12px}
+.topbar .search{width:420px;max-width:40vw}
+.avatar{width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,var(--primary),var(--primary-600));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.notif{position:relative}
+.notif .dot{position:absolute;right:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 0 2px var(--panel)}
+
+@media(max-width:700px){
+	.topbar .search{display:none}
+}
+
