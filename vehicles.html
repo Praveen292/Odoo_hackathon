@@ -3,430 +3,560 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TransitOps - Vehicles</title>
+<title>TransitOps — Vehicles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bg-void:#0f1417;
+  --bg-panel:#171e23;
+  --bg-panel-raised:#1e2730;
+  --bg-panel-hover:#253039;
+  --hairline:#29333a;
+  --hairline-soft:#1e262c;
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+  --line-teal:#2fb8a6;
+  --line-teal-dim:rgba(47,184,166,.14);
+  --line-amber:#e8a33d;
+  --line-amber-dim:rgba(232,163,61,.14);
+  --line-coral:#e15b4f;
+  --line-coral-dim:rgba(225,91,79,.14);
+  --line-violet:#7c8ce0;
+  --line-violet-dim:rgba(124,140,224,.14);
+
+  --ink-0:#f1f4f5;
+  --ink-1:#9aa7ac;
+  --ink-2:#5c6a70;
+
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
 }
 
-body{
-background:linear-gradient(135deg,#5B2EFF,#7B4DFF,#A855F7);
-min-height:100vh;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html,body{
+  background:var(--bg-void);
+  color:var(--ink-0);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.5;
+  min-height:100svh;
+  -webkit-font-smoothing:antialiased;
 }
 
-.container{
-display:flex;
-}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
 
-/* Sidebar */
+* { scrollbar-width:thin; scrollbar-color:var(--hairline) transparent; }
+*::-webkit-scrollbar{width:8px;height:8px;}
+*::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:8px;}
 
+.container{display:flex;min-height:100svh;}
+
+/* ---- sidebar ---- */
 .sidebar{
-width:250px;
-background:rgba(255,255,255,.15);
-backdrop-filter:blur(15px);
-color:white;
-padding:30px 20px;
-min-height:100vh;
+  width:216px;
+  flex-shrink:0;
+  background:var(--bg-panel);
+  border-right:1px solid var(--hairline);
+  padding:20px 14px;
+  display:flex;
+  flex-direction:column;
 }
 
-.sidebar h2{
-text-align:center;
-margin-bottom:35px;
+.sidebar__brand{
+  display:flex;align-items:center;gap:10px;
+  padding:0 8px;margin-bottom:28px;
+}
+.sidebar__brand-mark{
+  width:28px;height:28px;border-radius:7px;
+  background:var(--line-teal);color:var(--bg-void);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:14px;
+}
+.sidebar__brand-name{font-family:var(--font-display);font-size:14px;font-weight:600;letter-spacing:.04em;}
+
+.sidebar ul{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.sidebar li a{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:8px;
+  color:var(--ink-1);font-size:13.5px;font-weight:500;
+  transition:background .12s ease,color .12s ease;
+}
+.sidebar li a .dot{
+  width:9px;height:9px;border-radius:50%;flex-shrink:0;
+}
+.sidebar li a:hover{background:var(--bg-panel-hover);color:var(--ink-0);}
+.sidebar li a.active{background:var(--bg-panel-raised);color:var(--ink-0);}
+
+.sidebar__footer{
+  margin-top:auto;padding:12px;border-top:1px solid var(--hairline-soft);
+  font-size:12.5px;color:var(--ink-1);display:flex;align-items:center;gap:8px;
 }
 
-.sidebar ul{
-list-style:none;
+/* ---- main ---- */
+.main{flex:1;min-width:0;padding:28px;}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
 }
+.topbar h1{font-size:22px;margin-bottom:4px;}
+.topbar p{color:var(--ink-1);font-size:13.5px;}
+.topbar__clock{font-family:var(--font-mono);font-size:13px;color:var(--ink-1);}
 
-.sidebar li{
-margin:12px 0;
-}
-
-.sidebar a{
-display:block;
-padding:14px;
-text-decoration:none;
-color:white;
-border-radius:12px;
-transition:.3s;
-}
-
-.sidebar a:hover,
-.sidebar .active{
-background:white;
-color:#6A11CB;
-font-weight:bold;
-}
-
-/* Main */
-
-.main{
-flex:1;
-padding:30px;
-}
-
-header{
-background:white;
-padding:25px;
-border-radius:18px;
-margin-bottom:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-header h1{
-color:#6A11CB;
-}
-
-/* Summary Cards */
-
+/* ---- kpi cards ---- */
 .cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:30px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-bottom:20px;
 }
-
 .card{
-background:white;
-padding:25px;
-border-radius:18px;
-text-align:center;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-transition:.3s;
+  background:var(--bg-panel);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  padding:18px 20px;
+  display:flex;flex-direction:column;gap:10px;
 }
+.card__head{display:flex;align-items:center;gap:8px;}
+.card__head .dot{width:8px;height:8px;border-radius:50%;}
+.card__label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-1);}
+.card__value{font-family:var(--font-display);font-size:30px;font-weight:600;}
 
-.card:hover{
-transform:translateY(-8px);
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr);}}
+
+/* ---- insight strip (replaces the auto-sliding banner) ---- */
+.insights{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:20px;
 }
-
-.card h2{
-font-size:40px;
-color:#6A11CB;
-margin-top:10px;
+.insight{
+  background:var(--bg-panel);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  padding:16px 18px;
+  display:flex;gap:12px;align-items:flex-start;
 }
+.insight .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.insight h4{font-size:13px;font-weight:600;margin-bottom:4px;}
+.insight p{font-size:12.5px;color:var(--ink-1);line-height:1.5;}
 
-/* Carousel */
+@media(max-width:900px){.insights{grid-template-columns:1fr;}}
 
-.carousel{
-background:white;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-margin-bottom:30px;
-}
-
-.slider{
-display:flex;
-width:300%;
-animation:slide 12s infinite;
-}
-
-.slide{
-width:100%;
-padding:50px;
-text-align:center;
-color:white;
-}
-
-.slide:nth-child(1){
-background:linear-gradient(135deg,#5B2EFF,#8E2DE2);
-}
-
-.slide:nth-child(2){
-background:linear-gradient(135deg,#7B4DFF,#B06AB3);
-}
-
-.slide:nth-child(3){
-background:linear-gradient(135deg,#8E2DE2,#5B2EFF);
-}
-
-.slide h2{
-font-size:35px;
-margin-bottom:15px;
-}
-
-.slide p{
-font-size:18px;
-}
-
-@keyframes slide{
-
-0%,30%{
-transform:translateX(0);
-}
-
-35%,65%{
-transform:translateX(-100%);
-}
-
-70%,100%{
-transform:translateX(-200%);
-}
-
-}
-
-/* Search */
-
+/* ---- toolbar ---- */
 .top-bar{
-display:flex;
-justify-content:space-between;
-margin-bottom:20px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;margin-bottom:16px;flex-wrap:wrap;
 }
+.top-bar__filters{display:flex;gap:10px;flex:1;flex-wrap:wrap;}
 
-input{
-padding:12px;
-width:280px;
-border:none;
-border-radius:10px;
+input[type="text"],select{
+  background:var(--bg-panel);
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  padding:10px 13px;
+  color:var(--ink-0);
+  outline:none;
+  font-size:13.5px;
 }
+input[type="text"]{flex:1;min-width:200px;}
+input[type="text"]:focus,select:focus{border-color:var(--line-teal);}
+input::placeholder{color:var(--ink-2);}
 
-button{
-background:#6A11CB;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-transition:.3s;
+.btn-primary{
+  background:var(--line-teal);
+  color:#06201c;
+  border:none;border-radius:8px;
+  padding:10px 18px;
+  font-weight:600;font-size:13.5px;
+  transition:filter .15s ease;
+  white-space:nowrap;
 }
+.btn-primary:hover{filter:brightness(1.08);}
 
-button:hover{
-background:#4B0FA8;
-}
-
-/* Table */
-
+/* ---- table ---- */
 .table-section{
-background:white;
-padding:25px;
-border-radius:18px;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+  background:var(--bg-panel);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  padding:8px 20px 4px;
+  overflow-x:auto;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-}
+table{width:100%;border-collapse:collapse;min-width:640px;}
 
 th{
-background:#6A11CB;
-color:white;
-padding:15px;
+  text-align:left;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:var(--ink-2);
+  padding:14px 10px;
+  border-bottom:1px solid var(--hairline);
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
 }
+th:hover{color:var(--ink-1);}
+th .arrow{font-size:10px;margin-left:4px;color:var(--line-teal);}
 
 td{
-padding:15px;
-text-align:center;
-border-bottom:1px solid #eee;
+  padding:14px 10px;
+  border-bottom:1px solid var(--hairline-soft);
+  font-size:13.5px;
 }
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg-panel-hover);}
 
-tr:nth-child(even){
-background:#f8f6ff;
-}
+.mono{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-1);}
 
 .status{
-padding:6px 14px;
-border-radius:20px;
-color:white;
-font-size:13px;
-font-weight:bold;
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:600;
+}
+.status .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+.dot--teal{background:var(--line-teal);box-shadow:0 0 0 3px var(--line-teal-dim);}
+.dot--amber{background:var(--line-amber);box-shadow:0 0 0 3px var(--line-amber-dim);}
+.dot--coral{background:var(--line-coral);box-shadow:0 0 0 3px var(--line-coral-dim);}
+.dot--violet{background:var(--line-violet);box-shadow:0 0 0 3px var(--line-violet-dim);}
+
+.empty-row td{
+  text-align:center;
+  color:var(--ink-1);
+  font-size:13px;
+  padding:36px 10px;
 }
 
-.available{
-background:#28a745;
+/* ---- modal ---- */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(6,9,11,.65);
+  display:none;
+  align-items:center;justify-content:center;
+  z-index:50;
+  padding:20px;
 }
+.modal-backdrop.open{display:flex;}
 
-.trip{
-background:#ff9800;
+.modal{
+  background:var(--bg-panel);
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  padding:26px;
+  width:100%;max-width:420px;
 }
+.modal h2{font-size:18px;margin-bottom:4px;}
+.modal p{color:var(--ink-1);font-size:13px;margin-bottom:20px;}
 
-.maintenance{
-background:#e53935;
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.field label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-1);}
+.field input,.field select{width:100%;}
+
+.modal__actions{display:flex;gap:10px;margin-top:22px;}
+.btn-ghost{
+  flex:1;background:transparent;border:1px solid var(--hairline);
+  color:var(--ink-1);border-radius:8px;padding:10px;font-size:13.5px;font-weight:500;
 }
+.btn-ghost:hover{border-color:var(--ink-2);color:var(--ink-0);}
+.modal__actions .btn-primary{flex:1;}
 
 @media(max-width:900px){
-
-.container{
-flex-direction:column;
+  .container{flex-direction:column;}
+  .sidebar{width:100%;flex-direction:row;overflow-x:auto;align-items:center;}
+  .sidebar__brand{margin-bottom:0;}
+  .sidebar ul{flex-direction:row;}
+  .sidebar__footer{display:none;}
+  .top-bar{flex-direction:column;align-items:stretch;}
 }
-
-.sidebar{
-width:100%;
-min-height:auto;
-}
-
-.top-bar{
-flex-direction:column;
-gap:15px;
-}
-
-input{
-width:100%;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<aside class="sidebar">
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__brand-mark">T</div>
+      <span class="sidebar__brand-name">TRANSITOPS</span>
+    </div>
 
-<h2>🚌 TransitOps</h2>
+    <ul>
+      <li><a href="dashboard.html"><span class="dot dot--teal"></span>Dashboard</a></li>
+      <li><a class="active" href="#"><span class="dot dot--violet"></span>Vehicles</a></li>
+      <li><a href="drivers.html"><span class="dot dot--amber"></span>Drivers</a></li>
+      <li><a href="routes.html"><span class="dot dot--amber"></span>Routes</a></li>
+      <li><a href="trips.html"><span class="dot dot--violet"></span>Trips</a></li>
+      <li><a href="maintenance.html"><span class="dot dot--coral"></span>Maintenance</a></li>
+      <li><a href="reports.html"><span class="dot dot--teal"></span>Reports</a></li>
+      <li><a href="login.html"><span class="dot dot--coral"></span>Logout</a></li>
+    </ul>
 
-<ul>
-<li><a href="dashboard.html">🏠 Dashboard</a></li>
-<li><a class="active" href="#">🚗 Vehicles</a></li>
-<li><a href="drivers.html">👨‍✈ Drivers</a></li>
-<li><a href="routes.html">🛣 Routes</a></li>
-<li><a href="trips.html">📍 Trips</a></li>
-<li><a href="maintenance.html">🛠 Maintenance</a></li>
-<li><a href="reports.html">📊 Reports</a></li>
-<li><a href="login.html">🚪 Logout</a></li>
-</ul>
+    <div class="sidebar__footer">
+      <span class="dot dot--teal" style="width:7px;height:7px;"></span>
+      All systems nominal
+    </div>
+  </aside>
 
-</aside>
+  <div class="main">
 
-<div class="main">
+    <div class="topbar">
+      <div>
+        <h1>Vehicle management</h1>
+        <p>Manage and monitor your transport fleet.</p>
+      </div>
+      <div class="topbar__clock" id="clock"></div>
+    </div>
 
-<header>
+    <div class="cards">
+      <div class="card">
+        <div class="card__head"><span class="dot dot--violet"></span><span class="card__label">Total Vehicles</span></div>
+        <div class="card__value" id="kpi-total">58</div>
+      </div>
+      <div class="card">
+        <div class="card__head"><span class="dot dot--teal"></span><span class="card__label">Available</span></div>
+        <div class="card__value" id="kpi-available">42</div>
+      </div>
+      <div class="card">
+        <div class="card__head"><span class="dot dot--amber"></span><span class="card__label">On Trip</span></div>
+        <div class="card__value" id="kpi-trip">10</div>
+      </div>
+      <div class="card">
+        <div class="card__head"><span class="dot dot--coral"></span><span class="card__label">Maintenance</span></div>
+        <div class="card__value" id="kpi-maintenance">6</div>
+      </div>
+    </div>
 
-<h1>🚗 Vehicle Management</h1>
+    <div class="insights">
+      <div class="insight">
+        <span class="dot dot--coral"></span>
+        <div><h4>Truck TN22EF9876 flagged</h4><p>In for scheduled maintenance since this morning.</p></div>
+      </div>
+      <div class="insight">
+        <span class="dot dot--amber"></span>
+        <div><h4>2 vehicles on active trips</h4><p>Mini Van and Tempo Traveller are currently out on routes.</p></div>
+      </div>
+      <div class="insight">
+        <span class="dot dot--teal"></span>
+        <div><h4>72% of fleet available</h4><p>No unusual capacity constraints for today's schedule.</p></div>
+      </div>
+    </div>
 
-<p>Manage and monitor your transport fleet efficiently.</p>
+    <div class="top-bar">
+      <div class="top-bar__filters">
+        <input type="text" id="search" placeholder="Search vehicle, number, or type…">
+        <select id="typeFilter">
+          <option value="All">All types</option>
+          <option value="Bus">Bus</option>
+          <option value="Van">Van</option>
+          <option value="Truck">Truck</option>
+        </select>
+        <select id="statusFilter">
+          <option value="All">All statuses</option>
+          <option value="Available">Available</option>
+          <option value="On Trip">On Trip</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+      </div>
+      <button class="btn-primary" id="addBtn">+ Add Vehicle</button>
+    </div>
 
-</header>
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th data-key="id">ID</th>
+            <th data-key="name">Vehicle</th>
+            <th data-key="number">Number</th>
+            <th data-key="type">Type</th>
+            <th data-key="capacity">Capacity</th>
+            <th data-key="status">Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
 
-<div class="cards">
-
-<div class="card">
-<h3>Total Vehicles</h3>
-<h2>58</h2>
+  </div>
 </div>
 
-<div class="card">
-<h3>Available</h3>
-<h2>42</h2>
+<div class="modal-backdrop" id="modalBackdrop">
+  <form class="modal" id="addForm">
+    <h2>Add a vehicle</h2>
+    <p>It'll appear in the fleet table right away.</p>
+
+    <div class="field">
+      <label for="f-name">Vehicle name</label>
+      <input type="text" id="f-name" placeholder="e.g. Coach Bus" required>
+    </div>
+    <div class="field">
+      <label for="f-number">Registration number</label>
+      <input type="text" id="f-number" placeholder="e.g. TN01AB1111" required>
+    </div>
+    <div class="field">
+      <label for="f-type">Type</label>
+      <select id="f-type">
+        <option>Bus</option>
+        <option>Van</option>
+        <option>Truck</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-capacity">Capacity</label>
+      <input type="text" id="f-capacity" placeholder="e.g. 45 or 1000 Kg" required>
+    </div>
+    <div class="field">
+      <label for="f-status">Status</label>
+      <select id="f-status">
+        <option>Available</option>
+        <option>On Trip</option>
+        <option>Maintenance</option>
+      </select>
+    </div>
+
+    <div class="modal__actions">
+      <button type="button" class="btn-ghost" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn-primary">Add vehicle</button>
+    </div>
+  </form>
 </div>
 
-<div class="card">
-<h3>On Trip</h3>
-<h2>10</h2>
-</div>
+<script>
+// ---- data ----
+let vehicles = [
+  { id: 1, name: 'Bus',              number: 'TN09AB1234', type: 'Bus',   capacity: '50',      status: 'Available' },
+  { id: 2, name: 'Mini Van',         number: 'TN10CD4567', type: 'Van',   capacity: '15',      status: 'On Trip' },
+  { id: 3, name: 'Truck',            number: 'TN22EF9876', type: 'Truck', capacity: '1200 Kg', status: 'Maintenance' },
+  { id: 4, name: 'School Bus',       number: 'TN14XY5555', type: 'Bus',   capacity: '60',      status: 'Available' },
+  { id: 5, name: 'Tempo Traveller',  number: 'TN32PQ2020', type: 'Van',   capacity: '20',      status: 'On Trip' },
+];
 
-<div class="card">
-<h3>Maintenance</h3>
-<h2>6</h2>
-</div>
+const statusDot = { Available: 'teal', 'On Trip': 'amber', Maintenance: 'coral' };
 
-</div>
+let sortKey = 'id';
+let sortDir = 1;
 
-<div class="carousel">
+const tableBody = document.getElementById('tableBody');
+const searchInput = document.getElementById('search');
+const typeFilter = document.getElementById('typeFilter');
+const statusFilter = document.getElementById('statusFilter');
 
-<div class="slider">
+function updateKpis() {
+  document.getElementById('kpi-total').textContent = vehicles.length;
+  document.getElementById('kpi-available').textContent = vehicles.filter(v => v.status === 'Available').length;
+  document.getElementById('kpi-trip').textContent = vehicles.filter(v => v.status === 'On Trip').length;
+  document.getElementById('kpi-maintenance').textContent = vehicles.filter(v => v.status === 'Maintenance').length;
+}
 
-<div class="slide">
-<h2>🚌 Premium Fleet</h2>
-<p>Monitor buses, vans and trucks in one place.</p>
-</div>
+function render() {
+  const q = searchInput.value.trim().toLowerCase();
+  const type = typeFilter.value;
+  const status = statusFilter.value;
 
-<div class="slide">
-<h2>📍 Live Vehicle Tracking</h2>
-<p>Track vehicles and routes in real time.</p>
-</div>
+  let rows = vehicles.filter(v => {
+    if (type !== 'All' && v.type !== type) return false;
+    if (status !== 'All' && v.status !== status) return false;
+    if (q && !`${v.name} ${v.number} ${v.type}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
 
-<div class="slide">
-<h2>🛠 Maintenance Alerts</h2>
-<p>Never miss scheduled vehicle servicing.</p>
-</div>
+  rows.sort((a, b) => {
+    const av = a[sortKey], bv = b[sortKey];
+    if (typeof av === 'number') return (av - bv) * sortDir;
+    return String(av).localeCompare(String(bv)) * sortDir;
+  });
 
-</div>
+  tableBody.innerHTML = '';
 
-</div>
+  if (rows.length === 0) {
+    tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">No vehicles match those filters. Try a different search, type, or status.</td></tr>`;
+    updateKpis();
+    return;
+  }
 
-<div class="top-bar">
+  for (const v of rows) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="mono">${v.id}</td>
+      <td>${v.name}</td>
+      <td class="mono">${v.number}</td>
+      <td>${v.type}</td>
+      <td>${v.capacity}</td>
+      <td><span class="status"><span class="dot dot--${statusDot[v.status]}"></span>${v.status}</span></td>
+    `;
+    tableBody.appendChild(tr);
+  }
 
-<input type="text" placeholder="🔍 Search Vehicle">
+  updateKpis();
+}
 
-<button>+ Add Vehicle</button>
+// sortable headers
+document.querySelectorAll('th[data-key]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    if (sortKey === key) {
+      sortDir *= -1;
+    } else {
+      sortKey = key;
+      sortDir = 1;
+    }
+    document.querySelectorAll('th[data-key] .arrow').forEach(a => a.remove());
+    th.innerHTML += `<span class="arrow">${sortDir === 1 ? '▲' : '▼'}</span>`;
+    render();
+  });
+});
 
-</div>
+searchInput.addEventListener('input', render);
+typeFilter.addEventListener('change', render);
+statusFilter.addEventListener('change', render);
 
-<div class="table-section">
+// modal
+const modalBackdrop = document.getElementById('modalBackdrop');
+const addForm = document.getElementById('addForm');
 
-<table>
+document.getElementById('addBtn').addEventListener('click', () => modalBackdrop.classList.add('open'));
+document.getElementById('cancelBtn').addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
 
-<tr>
-<th>ID</th>
-<th>Vehicle</th>
-<th>Number</th>
-<th>Type</th>
-<th>Capacity</th>
-<th>Status</th>
-</tr>
+function closeModal() {
+  modalBackdrop.classList.remove('open');
+  addForm.reset();
+}
 
-<tr>
-<td>1</td>
-<td>Bus</td>
-<td>TN09AB1234</td>
-<td>Bus</td>
-<td>50</td>
-<td><span class="status available">Available</span></td>
-</tr>
+addForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nextId = vehicles.length ? Math.max(...vehicles.map(v => v.id)) + 1 : 1;
+  vehicles.push({
+    id: nextId,
+    name: document.getElementById('f-name').value.trim(),
+    number: document.getElementById('f-number').value.trim(),
+    type: document.getElementById('f-type').value,
+    capacity: document.getElementById('f-capacity').value.trim(),
+    status: document.getElementById('f-status').value,
+  });
+  closeModal();
+  render();
+});
 
-<tr>
-<td>2</td>
-<td>Mini Van</td>
-<td>TN10CD4567</td>
-<td>Van</td>
-<td>15</td>
-<td><span class="status trip">On Trip</span></td>
-</tr>
+// live clock
+function tickClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', {
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+  });
+}
+tickClock();
+setInterval(tickClock, 1000);
 
-<tr>
-<td>3</td>
-<td>Truck</td>
-<td>TN22EF9876</td>
-<td>Truck</td>
-<td>1200 Kg</td>
-<td><span class="status maintenance">Maintenance</span></td>
-</tr>
-
-<tr>
-<td>4</td>
-<td>School Bus</td>
-<td>TN14XY5555</td>
-<td>Bus</td>
-<td>60</td>
-<td><span class="status available">Available</span></td>
-</tr>
-
-<tr>
-<td>5</td>
-<td>Tempo Traveller</td>
-<td>TN32PQ2020</td>
-<td>Van</td>
-<td>20</td>
-<td><span class="status trip">On Trip</span></td>
-</tr>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
+render();
+</script>
 
 </body>
 </html>
