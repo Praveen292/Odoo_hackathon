@@ -1,355 +1,295 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TransitOps — Register</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<title>TransitOps Register</title>
 
 <style>
-:root{
-  --bg-void:#0f1417;
-  --bg-panel:#171e23;
-  --bg-panel-raised:#1e2730;
 
-  --hairline:#29333a;
-  --hairline-soft:#1e262c;
-
-  --line-teal:#2fb8a6;
-  --line-teal-dim:rgba(47,184,166,.14);
-  --line-amber:#e8a33d;
-  --line-amber-dim:rgba(232,163,61,.14);
-  --line-coral:#e15b4f;
-  --line-coral-dim:rgba(225,91,79,.14);
-  --line-violet:#7c8ce0;
-  --line-violet-dim:rgba(124,140,224,.14);
-
-  --ink-0:#f1f4f5;
-  --ink-1:#9aa7ac;
-  --ink-2:#5c6a70;
-
-  --font-display:'Space Grotesk',system-ui,sans-serif;
-  --font-body:'Inter',system-ui,sans-serif;
-  --font-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-
-html,body{
-  background:var(--bg-void);
-  color:var(--ink-0);
-  font-family:var(--font-body);
-  font-size:15px;
-  line-height:1.5;
-  min-height:100svh;
-  -webkit-font-smoothing:antialiased;
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#5B2EFF,#7B4DFF,#A855F7);
 }
 
-h1,h2{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
-a{color:inherit;text-decoration:none;}
-button{cursor:pointer;font-family:inherit;}
-
-.auth-screen{
-  min-height:100svh;
-  display:grid;
-  grid-template-columns:1.1fr 1fr;
+.register-container{
+    width:420px;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,.2);
 }
 
-@media(max-width:900px){
-  .auth-screen{grid-template-columns:1fr;}
-  .auth-screen__panel{display:none;}
+.logo{
+    text-align:center;
+    margin-bottom:25px;
 }
 
-/* ---- left panel ---- */
-.auth-screen__panel{
-  position:relative;
-  padding:48px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(47,184,166,.16), transparent 45%),
-    radial-gradient(circle at 80% 85%, rgba(124,140,224,.14), transparent 50%),
-    var(--bg-panel);
-  border-right:1px solid var(--hairline);
+.logo h1{
+    color:#6A11CB;
+    font-size:32px;
 }
 
-.auth-screen__quote{max-width:420px;}
-.auth-screen__quote h2{font-size:28px;line-height:1.25;}
-.auth-screen__quote p{margin-top:12px;color:var(--ink-1);font-size:14px;}
-
-.auth-screen__board{
-  font-family:var(--font-mono);
-  font-size:13px;
-  color:var(--ink-1);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.auth-screen__board-row{
-  display:grid;
-  grid-template-columns:100px 1fr 90px;
-  gap:12px;
-  padding:8px 12px;
-  border:1px solid var(--hairline);
-  border-radius:6px;
-  background:rgba(23,30,35,.6);
-}
-.auth-screen__board-row span:first-child{color:var(--ink-0);}
-
-/* ---- right panel / form ---- */
-.auth-screen__form-wrap{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:32px;
-  overflow-y:auto;
+.logo p{
+    color:#777;
+    margin-top:8px;
 }
 
-.auth-form{width:100%;max-width:400px;padding:24px 0;}
-
-.auth-form__brand{
-  display:flex;align-items:center;gap:10px;margin-bottom:32px;
+h2{
+    text-align:center;
+    color:#333;
+    margin-bottom:25px;
 }
-.auth-form__brand-mark{
-  width:30px;height:30px;border-radius:8px;
-  background:var(--line-teal);color:var(--bg-void);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-weight:700;font-size:15px;
+
+.input-box{
+    margin-bottom:18px;
 }
-.auth-form__brand-name{font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:.02em;}
 
-.auth-form h1{font-size:24px;margin-bottom:6px;}
-.auth-form__sub{color:var(--ink-1);font-size:14px;margin-bottom:24px;}
-
-.auth-form__error{
-  background:var(--line-coral-dim);
-  border:1px solid rgba(225,91,79,.4);
-  color:#ffb3aa;
-  font-size:13px;
-  padding:10px 12px;
-  border-radius:8px;
-  margin-bottom:18px;
-  display:none;
+.input-box label{
+    display:block;
+    margin-bottom:8px;
+    color:#555;
+    font-weight:600;
 }
-.auth-form__error.show{display:block;}
 
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-.field label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-1);}
+.input-box input,
+.input-box select{
 
-.field input,.field select{
-  background:var(--bg-panel);
-  border:1px solid var(--hairline);
-  border-radius:8px;
-  padding:11px 13px;
-  color:var(--ink-0);
-  outline:none;
-  font-size:14px;
-  transition:border-color .15s ease;
-  width:100%;
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+
 }
-.field input:focus,.field select:focus{border-color:var(--line-teal);}
-.field input::placeholder{color:var(--ink-2);}
 
-.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239aa7ac'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;}
+.input-box input:focus,
+.input-box select:focus{
 
-.field--error input,.field--error select{border-color:var(--line-coral);}
-.field__hint{font-size:11.5px;color:var(--line-coral);display:none;}
-.field--error .field__hint{display:block;}
+    border-color:#6A11CB;
+    box-shadow:0 0 8px rgba(106,17,203,.3);
 
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-
-.btn-primary{
-  width:100%;
-  background:var(--line-teal);
-  color:#06201c;
-  border:none;
-  border-radius:8px;
-  padding:12px;
-  font-weight:600;
-  font-size:14px;
-  transition:filter .15s ease;
 }
-.btn-primary:hover{filter:brightness(1.08);}
-.btn-primary:disabled{opacity:.6;cursor:not-allowed;}
 
-.auth-form__footer{
-  margin-top:20px;
-  font-size:13px;
-  color:var(--ink-1);
-  text-align:center;
+button{
+
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#6A11CB;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+
 }
-.auth-form__footer a{color:var(--line-teal);font-weight:600;}
+
+button:hover{
+
+    background:#4B0FA8;
+
+}
+
+.login{
+
+    text-align:center;
+    margin-top:20px;
+    color:#555;
+
+}
+
+.login a{
+
+    color:#6A11CB;
+    font-weight:bold;
+    text-decoration:none;
+
+}
+
+@media(max-width:500px){
+
+.register-container{
+
+width:90%;
+
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="auth-screen">
 
-  <div class="auth-screen__panel">
-    <div class="auth-screen__quote">
-      <h2>Every operator, one console.</h2>
-      <p>Create an account to get dispatcher access to live fleet status, routes, and incidents across the network.</p>
-    </div>
+<div class="register-container">
 
-    <div class="auth-screen__board">
-      <div class="auth-screen__board-row"><span>Onboarding</span><span>New operator accounts</span><span>Open</span></div>
-      <div class="auth-screen__board-row"><span>Access</span><span>Admin / Manager / Driver roles</span><span>Configurable</span></div>
-    </div>
-  </div>
 
-  <div class="auth-screen__form-wrap">
-    <form class="auth-form" id="registerForm" novalidate>
-      <div class="auth-form__brand">
-        <div class="auth-form__brand-mark">T</div>
-        <div class="auth-form__brand-name">TRANSITOPS</div>
-      </div>
+<div class="logo">
 
-      <h1>Create an account</h1>
-      <p class="auth-form__sub">Smart Transport Operations Platform</p>
+<h1>🚌 TransitOps</h1>
 
-      <div class="auth-form__error" id="formError"></div>
-
-      <div class="field" id="field-name">
-        <label for="fullName">Full name</label>
-        <input type="text" id="fullName" placeholder="Enter full name" autocomplete="name" required>
-        <span class="field__hint">Enter your full name.</span>
-      </div>
-
-      <div class="field" id="field-email">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="you@transitops.city" autocomplete="username" required>
-        <span class="field__hint">Enter a valid email address.</span>
-      </div>
-
-      <div class="field" id="field-phone">
-        <label for="phone">Phone number</label>
-        <input type="tel" id="phone" placeholder="10-digit phone number" autocomplete="tel" required>
-        <span class="field__hint">Enter a valid 10-digit phone number.</span>
-      </div>
-
-      <div class="field" id="field-role">
-        <label for="role">User role</label>
-        <select id="role" required>
-          <option value="">Select role</option>
-          <option>Admin</option>
-          <option>Manager</option>
-          <option>Driver</option>
-        </select>
-        <span class="field__hint">Select a role.</span>
-      </div>
-
-      <div class="field-row">
-        <div class="field" id="field-password">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password" required>
-          <span class="field__hint">At least 6 characters.</span>
-        </div>
-
-        <div class="field" id="field-confirm">
-          <label for="confirmPassword">Confirm</label>
-          <input type="password" id="confirmPassword" placeholder="Repeat password" autocomplete="new-password" required>
-          <span class="field__hint">Passwords don't match.</span>
-        </div>
-      </div>
-
-      <button class="btn-primary" type="submit">Register</button>
-
-      <div class="auth-form__footer">
-        Already have an account? <a href="login.html">Sign in</a>
-      </div>
-    </form>
-  </div>
+<p>Smart Transport Operations Platform</p>
 
 </div>
 
+
+<h2>Create Account</h2>
+
+
+
+<form onsubmit="registerUser(event)">
+
+
+
+<div class="input-box">
+
+<label>Full Name</label>
+
+<input type="text" placeholder="Enter Full Name" required>
+
+</div>
+
+
+
+<div class="input-box">
+
+<label>Email</label>
+
+<input type="email" placeholder="Enter Email" required>
+
+</div>
+
+
+
+<div class="input-box">
+
+<label>Phone Number</label>
+
+<input type="tel" placeholder="Enter Phone Number" required>
+
+</div>
+
+
+
+<div class="input-box">
+
+<label>User Role</label>
+
+<select required>
+
+<option value="">Select Role</option>
+<option>Admin</option>
+<option>Manager</option>
+<option>Driver</option>
+
+</select>
+
+</div>
+
+
+
+<div class="input-box">
+
+<label>Password</label>
+
+<input type="password" id="password" placeholder="Create Password" required>
+
+</div>
+
+
+
+<div class="input-box">
+
+<label>Confirm Password</label>
+
+<input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+</div>
+
+
+
+<button type="submit">
+
+Register
+
+</button>
+
+
+
+<p class="login">
+
+Already have an account?
+
+<a href="login.html">
+
+Login
+
+</a>
+
+</p>
+
+
+
+</form>
+
+
+</div>
+
+
+
 <script>
-const form = document.getElementById('registerForm');
-const formError = document.getElementById('formError');
 
-const fields = {
-  fullName: { el: document.getElementById('fullName'), wrap: document.getElementById('field-name') },
-  email: { el: document.getElementById('email'), wrap: document.getElementById('field-email') },
-  phone: { el: document.getElementById('phone'), wrap: document.getElementById('field-phone') },
-  role: { el: document.getElementById('role'), wrap: document.getElementById('field-role') },
-  password: { el: document.getElementById('password'), wrap: document.getElementById('field-password') },
-  confirmPassword: { el: document.getElementById('confirmPassword'), wrap: document.getElementById('field-confirm') },
-};
+function registerUser(event){
 
-function clearErrors() {
-  formError.classList.remove('show');
-  formError.textContent = '';
-  Object.values(fields).forEach(f => f.wrap.classList.remove('field--error'));
-}
+    event.preventDefault();
 
-function markInvalid(key) {
-  fields[key].wrap.classList.add('field--error');
-}
 
-function validate() {
-  clearErrors();
-  let valid = true;
-  const problems = [];
+    let password = document.getElementById("password").value;
 
-  const name = fields.fullName.el.value.trim();
-  if (!name) { markInvalid('fullName'); valid = false; problems.push('name'); }
+    let confirmPassword = document.getElementById("confirmPassword").value;
 
-  const email = fields.email.el.value.trim();
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!emailOk) { markInvalid('email'); valid = false; problems.push('email'); }
 
-  const phone = fields.phone.el.value.trim().replace(/\D/g, '');
-  if (phone.length !== 10) { markInvalid('phone'); valid = false; problems.push('phone'); }
 
-  const role = fields.role.el.value;
-  if (!role) { markInvalid('role'); valid = false; problems.push('role'); }
+    if(password !== confirmPassword){
 
-  const password = fields.password.el.value;
-  if (password.length < 6) { markInvalid('password'); valid = false; problems.push('password'); }
+        alert("Passwords do not match");
 
-  const confirmPassword = fields.confirmPassword.el.value;
-  if (password !== confirmPassword || !confirmPassword) {
-    markInvalid('confirmPassword');
-    valid = false;
-    problems.push('matching passwords');
-  }
+        return;
 
-  if (!valid) {
-    formError.textContent = 'Check the highlighted fields — ' + problems.join(', ') + '.';
-    formError.classList.add('show');
-  }
-
-  return valid;
-}
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (!validate()) return;
-
-  // No backend yet — carry the operator's name and role forward so
-  // dashboard.html can greet them, same pattern the rest of the demo uses.
-  const params = new URLSearchParams({
-    name: fields.fullName.el.value.trim(),
-    role: fields.role.el.value,
-  });
-  window.location.href = `dashboard.html?${params.toString()}`;
-});
-
-// clear a field's error state as soon as the person fixes it
-Object.entries(fields).forEach(([key, f]) => {
-  f.el.addEventListener('input', () => {
-    if (key === 'confirmPassword' || key === 'password') {
-      if (fields.password.el.value === fields.confirmPassword.el.value && fields.confirmPassword.el.value) {
-        fields.confirmPassword.wrap.classList.remove('field--error');
-      }
     }
-    if (f.el.value.trim()) f.wrap.classList.remove('field--error');
-  });
-});
+
+
+    alert("Successfully Registered!");
+
+
+    window.location.href="login.html";
+
+
+}
+
 </script>
 
+
 </body>
+
 </html>
+```
